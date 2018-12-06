@@ -1,11 +1,13 @@
 package javaapplication1;
 
+
+
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  *
- * @author Vinícius
+ * @author 
  */
 public class Fachada {
     
@@ -20,7 +22,15 @@ public class Fachada {
     
    
     
-    
+    public Aluno login(String nome, String senha) {
+        for(Aluno al : listaAluno) {
+            if(al.getnome().equalsIgnoreCase(nome) && al.getsenha().equals(senha)) {
+                return al;
+            }
+        }
+        
+        return null;
+    }
     
     public void buscar(int codo){
     	for(Atividade p: lista){

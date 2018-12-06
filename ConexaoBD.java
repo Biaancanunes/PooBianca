@@ -1,5 +1,7 @@
 package javaapplication1;
 
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,11 +18,11 @@ public class ConexaoBD {
 		// atributo para definição do serviço do BD utilizado pela aplicação
 		this.driver = "org.postgresql.Driver";
 		// atributo para definição da url de acesso ao banco
-		this.caminho = "jdbc:postgresql://localhost:5432/postgres";
+		this.caminho = "jdbc:postgresql://localhost:5432/ifpb";
 		// atributo para definição do login do usuário no banco
 		this.user = "postgres";
 		// atributo para definição da senha do usuário no banco
-		this.password = "ifpb";
+		this.password = "1111";
 		// objeto responsável pelo estabelecimento da conexão com o BD (será inicializado quando a conexão
 		// com o banco for iniciada)
 		this.conexao = null;

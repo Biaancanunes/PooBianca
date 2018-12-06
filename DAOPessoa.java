@@ -1,10 +1,13 @@
 package javaapplication1;
 
 
+
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class DAOPessoa {
@@ -19,6 +22,44 @@ private boolean login = false;
 		// ao banco
 		this.conexao = new ConexaoBD();
 	}
+        
+        public Aluno login(String nome, String senha) {
+            conexao.conectar();
+            
+            try {
+                PreparedStatement pst = conexao.getConexao().prepareStatement("select * from \"poo\".Aluno where nome = ? and senha = ?");
+                
+                pst.setString(1, nome);
+                pst.setString(2, senha);
+                
+                pst.execute();
+                
+                ResultSet rs = pst.getResultSet();
+                
+                String nomeAluno = "";
+                String senhaAluno = "";
+                
+                while (rs.next() ) {
+                    nomeAluno = rs.getString("nome");
+                    senhaAluno = rs.getString("senha");
+                }
+                
+                if(!nomeAluno.equals("") && !senhaAluno.equals("")) {
+                    return new Aluno(nomeAluno, senhaAluno);
+                }
+                
+                return null;
+            } catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                // o banco deve ser desconectado, mesmo quando a exceção é lançada
+                conexao.desconectar();
+            }
+            
+            return null;
+        }
+       
 	
 	public void criarDisciplina(Disciplina User) {
 		// abrindo a conexão com o BD
@@ -26,14 +67,13 @@ private boolean login = false;
 
 		try {
 			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
+                        
 			PreparedStatement pst = conexao.getConexao().prepareStatement("insert into \"poo\".Disciplina(acr,prof) values(?,?)");
 			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
 			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
 			
 			pst.setString(1,User.getAcr());
 			pst.setString(2, User.getProf());
-			
-			
 			
 			
 			
@@ -93,11 +133,7 @@ private boolean login = false;
                         pst.setString(3,atividade.getStatus());
                         pst.setString(4,atividade.getTag());
                         pst.setInt(5,atividade.getCod());
-			
-			
-			
-			
-			
+		
 			// solicitação da execução da query, após seu preparo
 			pst.execute();
 		} catch (SQLException e) {
@@ -114,7 +150,7 @@ private boolean login = false;
 		conexao.conectar();
 		
 		try {
-			PreparedStatement stm = conexao.getConexao().prepareStatement("delete from \"taqvim\".atividade where cod = \'" + cod + "\'");
+			PreparedStatement stm = conexao.getConexao().prepareStatement("delete from \"poo \".atividade where cod = \'" + cod + "\'");
 			stm.execute();
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
