@@ -22,7 +22,7 @@ public class ConexaoBD {
 		// atributo para definição do login do usuário no banco
 		this.user = "postgres";
 		// atributo para definição da senha do usuário no banco
-		this.password = "1111";
+		this.password = "ifpb";
 		// objeto responsável pelo estabelecimento da conexão com o BD (será inicializado quando a conexão
 		// com o banco for iniciada)
 		this.conexao = null;
@@ -74,6 +74,141 @@ public class ConexaoBD {
 	// para acessar a conexão (que está encapsulada)
 	public Connection getConexao() {
 		return conexao;
+	}
+        
+        public Aluno login(String nome, String senha) {
+            conectar();
+            
+            try {
+                PreparedStatement pst = getConexao().prepareStatement("select * from Aluno where nome = ? and senha = ?");
+                
+                pst.setString(1, nome);
+                pst.setString(2, senha);
+                
+                pst.execute();
+                
+                ResultSet rs = pst.getResultSet();
+                
+                String nomeAluno = "";
+                String senhaAluno = "";
+                
+                while (rs.next() ) {
+                    nomeAluno = rs.getString("nome");
+                    senhaAluno = rs.getString("senha");
+                }
+                
+                if(!nomeAluno.equals("") && !senhaAluno.equals("")) {
+                    return new Aluno(nomeAluno, senhaAluno);
+                }
+                
+                return null;
+            } catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                // o banco deve ser desconectado, mesmo quando a exceção é lançada
+                desconectar();
+            }
+            
+            return null;
+        }
+        
+        public void criarDisciplina(Disciplina User) {
+		// abrindo a conexão com o BD
+		conectar();
+
+		try {
+			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
+                        
+			PreparedStatement pst = getConexao().prepareStatement("insert into Disciplina(nome,prof) values(?,?)");
+			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
+			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
+			
+			pst.setString(1,User.getAcr());
+			pst.setString(2, User.getProf());
+			
+			
+			
+			// solicitação da execução da query, após seu preparo
+			pst.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			desconectar();
+		}
+        }
+          
+        public void cadastrarAluno(Aluno Alun) {
+		// abrindo a conexão com o BD
+		conectar();
+
+		try {
+			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
+			PreparedStatement pst = getConexao().prepareStatement("insert into Aluno(nome,senha) values(?,?)");
+			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
+			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
+			
+			pst.setString(1,Alun.getnome());
+			pst.setString(2, Alun.getsenha());
+			
+			
+			
+			
+			
+			// solicitação da execução da query, após seu preparo
+			pst.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			desconectar();
+		}
+          
+		
+	}
+        
+        public void criarATV(Atividade atividade) {
+		// abrindo a conexão com o BD
+		conectar();
+
+		try {
+			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
+			PreparedStatement pst = getConexao().prepareStatement("insert into Atividade values(?,?,?,?,?)");
+			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
+			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
+			
+			pst.setString(1,atividade.getNome());
+			pst.setString(2,atividade.getDesc());
+                        pst.setString(3,atividade.getStatus());
+                        pst.setString(4,atividade.getTag());
+                        pst.setInt(5,atividade.getCod());
+                        //pst.setString(6, atividade.getDisc().getAcr());
+		
+			// solicitação da execução da query, após seu preparo
+			pst.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			desconectar();
+		}
+          
+		
+	}
+	public void excluiratv(int cod) {
+		// abrindo a conexão com o BD
+		conectar();
+		
+		try {
+			PreparedStatement stm = getConexao().prepareStatement("delete from atividade where cod = \'" + cod + "\'");
+			stm.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			desconectar();
+		}
 	}
 	
 }

@@ -14,7 +14,7 @@ public class Atividade {
 	    
 	    
 	    
-	    Atividade(String nome, String desc, String status, String tag,int cod) {
+	    public Atividade(String nome, String desc, String status, String tag,int cod) {
 	        this.nome = nome;
 	        this.desc = desc;
 	        this.status = status;

@@ -33,7 +33,7 @@ public class Disciplina {
     }
     
 
-    Disciplina(String acr, String prof){
+    public Disciplina(String acr, String prof){
     	this.acr = acr;
     	this.prof = prof;
     
