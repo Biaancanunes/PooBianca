@@ -1,0 +1,35 @@
+CREATE DATABASE "poo"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+    
+    
+create table Disciplina(
+    nome varchar(50) primary key,
+    prof varchar(50)
+);
+create table Atividade(
+	nome varchar(50),
+    descr varchar(50),
+    stts varchar(50),
+    tag varchar(50),
+    cod int primary key,
+    disc_nome varchar(50),
+	foreign key(disc_nome) references Disciplina(nome)
+	);
+	
+create table Aluno(
+	id serial primary key,
+	nome varchar(50),
+	senha varchar(50)
+);
+
+create table Professor(
+	id serial primary key,
+	nome varchar(50),
+	 varchar(50)
+);
