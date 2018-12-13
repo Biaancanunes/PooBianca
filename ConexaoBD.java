@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ConexaoBD {
 
@@ -210,5 +211,52 @@ public class ConexaoBD {
 			desconectar();
 		}
 	}
+        
+        public ArrayList<Atividade> lerAtvs() {
+            conectar();
+            String query = "SELECT * FROM atividade";
+            
+            ResultSet rs = executarSQL(query);
+            
+            ArrayList<Atividade> atvs = new ArrayList<Atividade>();
+            try{
+                while(rs.next()) {
+                    String nome = rs.getString("nome");
+                    String descr = rs.getString("descr");
+                    String stts = rs.getString("stts");
+                    String tag = rs.getString("tag");
+                    int cod = rs.getInt("cod");
+                    
+                    atvs.add(new Atividade(nome, descr, stts, tag, cod));
+                }
+            }catch(Exception e) {
+                    
+             }
+            
+            return atvs;
+        }
+        
+        public Atividade buscarAtv(int cod) {
+            conectar();
+            String query = "SELECT * FROM atividade WHERE cod=" + cod;
+            
+            ResultSet rs = executarSQL(query);
+            
+            Atividade atv;
+            try{
+                while(rs.next()) {
+                    String nome = rs.getString("nome");
+                    String descr = rs.getString("descr");
+                    String stts = rs.getString("stts");
+                    String tag = rs.getString("tag");
+                    
+                    return new Atividade(nome, descr, stts, tag, cod);
+                }
+            }catch(Exception e) {
+                    
+             }
+            
+            return null;
+        }
 	
 }

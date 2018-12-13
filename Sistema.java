@@ -35,13 +35,8 @@ public class Sistema {
     }
     
     public void buscar(int codo){
-    	for(Atividade p: lista){
-    		if( "Concluida".equals(p.getStatus()))
-    			System.out.println("A atividade ja esta concluida e arquivada");
-            else if(p.getCod() == codo){
-                System.out.println(p.toString());
-            }
-        }
+        Atividade atv = bd.buscarAtv(codo);
+    	System.out.println(atv);
     }
    
     public void excluirAtividade(int co){
@@ -75,17 +70,12 @@ public class Sistema {
         }
     }
     public void feed(){
-    	System.out.println("Concluidas e arquivadas");
-    	for(Atividade p: lista){
-            if("Concluida".equals(p.getStatus())){
-                System.out.println(p.toString());
-            }
-    	}
-        System.out.println("Nao Concluidas");
-        for(Atividade a: lista){
-             if(!"Concluida".equals(a.getStatus())){
+        ArrayList<Atividade> listaAtvs = bd.lerAtvs();
+
+        //System.out.println("Nao Concluidas");
+        for(Atividade a: listaAtvs){
+            if(a != null)
                 System.out.println(a.toString());
-             }
         
        }
     }

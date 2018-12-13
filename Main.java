@@ -1,7 +1,6 @@
 package javaapplication1;
 
 import java.util.Scanner;
-import static javaapplication1.TestaConexaoBD.menuUsuario;
 
 
 public class Main {
@@ -38,7 +37,7 @@ public class Main {
                 System.out.println("Oque voce deseja fazer:\n 1-Criar Usuario 2-Fazer Login 3-sair");
                 alet = s.nextInt();
             }
-            if(alet==2) {
+            else if(alet==2) {
                 System.out.println("Digite o nome:");
                 String nome = s.next();
                 System.out.println("Digite a senha:");
@@ -51,11 +50,13 @@ public class Main {
                     menuUsuario(al, x, s);
                 }else {
                     System.out.println("Usuário inexistente.");
-                    System.out.println("Oque voce deseja fazer:\n 1-Criar Usuario 2-Fazer Login 3-sair");
                 }
+                System.out.println("Oque voce deseja fazer:\n 1-Criar Usuario 2-Fazer Login 3-sair");
                 alet = s.nextInt();
 
-            }                
+            }else {
+                break;
+            }             
         }
         
         
@@ -63,7 +64,7 @@ public class Main {
     
     public static void menuUsuario(Aluno al, Sistema x, Scanner s) {
         System.out.println("_______________________________________________________________________________________________");
-        System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Concluir Atividade 6-Ver feed");
+        System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Ver feed");
        
         
         int alet = s.nextInt();
@@ -88,7 +89,7 @@ public class Main {
             x.visualizarAtvs();
             
         }
-        if(alet == 2){
+        else if(alet == 2){
             System.out.println("Digite seu Nome:");
             String acr = s.next();
             System.out.println("Digite o nome do professor:");
@@ -97,29 +98,26 @@ public class Main {
             x.criarDisc(acr, prof);
             System.out.println("_______________________________________________________________________________________________");
         }
-        if(alet == 3 ){
+        else if(alet == 3 ){
             x.visualizarAtvs();
         	System.out.println("Digite o codigo da atividade:");
             int cod = s.nextInt();
             x.buscar(cod);
             
         }
-        if(alet == 4){
+        else if(alet == 4){
             System.out.println("Digite o codigo da atividade pra ser excluida");
             int code = s.nextInt();
             x.excluirAtividade(code);
         }
-        if(alet == 5){
-            System.out.println("Digite o codigo da atividade pra ser concluida");
-            int cod = s.nextInt();
-            x.concluirAtividade(cod);
-        }
-        if(alet == 6){
+        else if(alet == 5){
           x.feed();
+        }else {
+            break;
         }
         
         System.out.println(" ");
-        System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Concluir Atividade 6-Ver feed 7-sair");
+        System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Ver feed 6-sair");
         alet = s.nextInt();
         
     }

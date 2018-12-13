@@ -24,7 +24,7 @@ public class Atividade {
 
 	    @Override
 	    public String toString() {
-	        return "Atividade{" + "nome=" + nome + ", desc=" + desc + ", status=" + status + ", tag=" + tag + ", Disciplina=" + disc.getAcr() + '}';
+	        return "Atividade{" + "nome=" + nome + ", desc=" + desc + ", status=" + status + ", tag=" + tag + ",}";
 	    }
 
 	    
